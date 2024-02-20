@@ -2,14 +2,13 @@ package com.cli;
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.List;
 import com.model.Portfolio;
 import com.model.PortfolioShareClass;
 import com.opencsv.exceptions.CsvValidationException;
 import com.parser.CSVParser;
 
-//CLI interface class
+
 public class CLI {
 	private List<Portfolio> portfolios;
 	private List<PortfolioShareClass> shareClasses;
@@ -29,38 +28,35 @@ public class CLI {
 	public void startPrompt() {
 		// Display prompt and handle user input
 		Scanner scanner = new Scanner(System.in);
-		
+
 		while (true) {
 			System.out.print("> ");
-			String input = scanner.nextLine();
-			
-			if ("exit".equalsIgnoreCase(input)) {
-				System.out.println("Exiting...");
-				break;
+			String input = scanner.nextLine().toLowerCase();
+			if (input.equals("show share class")) {
+				System.out.println("Code? ");
+				input = scanner.nextLine();
+				showShareClass(input);
 			} else {
 				processCommand(input);
 			}
 		}
 	}
-	
+
 	private void processCommand(String command) {
-        switch (command.toLowerCase()) {
-            case "help":
-                System.out.println("Available commands: COUNTS, LIST PORTFOLIOS, SHOW SHARE CLASS");
-                break;
-            case "counts":
-                counts();
-                break;
-            case "list portfolios":
-                listPortfolios();
-                break;
-            case "show share class":
-                System.out.println("Share class: ");
-                break;
-            default:
-                System.out.println("Unknown command. Type 'help' for available commands.");
-        }
-    }
+		switch (command) {
+		case "help":
+			System.out.println("Available commands: COUNTS, LIST PORTFOLIOS, SHOW SHARE CLASS");
+			break;
+		case "counts":
+			counts();
+			break;
+		case "list portfolios":
+			listPortfolios();
+			break;
+		default:
+			System.out.println("Unknown command. Type 'help' for available commands.");
+		}
+	}
 
 	// Implement commands: COUNTS, LIST PORTFOLIOS, SHOW SHARE CLASS
 	private void counts() {
@@ -68,10 +64,18 @@ public class CLI {
 		System.out.println(shareClasses.size() + " Portfolio Share Classes loaded.");
 
 	}
-	
+
 	private void listPortfolios() {
 		for (Portfolio p : portfolios) {
 			System.out.println(p.getName() + ", " + p.getShareClasses().size() + " Share Classes");
 		}
+	}
+
+	private void showShareClass(String code) {
+		Portfolio parent = CSVParser.getCodeMap().get(code); 
+		for (PortfolioShareClass psc : parent.getShareClasses()) {
+			System.out.println(parent.getName() + " " + psc.getName() + " " + psc.getCode() + " " + String.format("%.0f%%", psc.getBaseFee()));
+		}
+
 	}
 }

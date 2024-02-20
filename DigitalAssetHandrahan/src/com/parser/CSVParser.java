@@ -15,9 +15,15 @@ import com.model.PortfolioShareClass;
 
 //CSV parser class
 public class CSVParser {
-	public static Map<String, Portfolio> codeLookUp = new HashMap<>();
+	public static Map<String, Portfolio> codeLookUp; 
+	
+	public static Map<String, Portfolio> getCodeMap() {
+		return codeLookUp;
+	}
+	
 	public static List<Portfolio> parsePortfolios(String filename) throws IOException, CsvValidationException {
 		List<Portfolio> portfolios = new ArrayList<>();
+		codeLookUp = new HashMap<>();
 		
 		try (CSVReader reader = new CSVReader(new FileReader(filename))) {
 			String[] nextLine;

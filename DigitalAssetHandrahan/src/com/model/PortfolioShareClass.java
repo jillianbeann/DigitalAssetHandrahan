@@ -14,12 +14,24 @@ public class PortfolioShareClass {
         this.baseFee = baseFee;
     }
 	
+	public void setParentPortfolio(Portfolio parent) {
+		this.parentPortfolio  = parent;
+	}
+	
 	public Portfolio getParentPortfolio() {
 		return parentPortfolio;
 	}
-	
-	public void setParentPortfolio(Portfolio parent) {
-		this.parentPortfolio  = parent;
+
+	public String getName() {
+		return name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public double getBaseFee() {
+		return baseFee;
 	}
 
 }
