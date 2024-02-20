@@ -14,6 +14,10 @@ public class CLI {
 	private Map<String, Portfolio> portfolios;
 	private List<PortfolioShareClass> shareClasses;
 
+	/**
+	 * Retrieves data structures with Portfolio and PortfolioShareClass entities, prompts user based on outcome
+	 * @throws CsvValidationException
+	 */
 	public CLI() throws CsvValidationException {
 		try {
 			portfolios = CSVParser.parsePortfolios("Portfolio.CSV");
@@ -32,10 +36,11 @@ public class CLI {
 
 		while (true) {
 			System.out.print("> ");
-			String input = scanner.nextLine();
+			String input = scanner.nextLine().trim();
 			if (input.equals("SHOW SHARE CLASS")) {
+				// Use this scanner to read the code -> pass to handler 
 				System.out.print("Code? ");
-				input = scanner.nextLine();
+				input = scanner.nextLine().trim();
 				showShareClass(input);
 			} else {
 				processCommand(input);
@@ -43,6 +48,10 @@ public class CLI {
 		}
 	}
 
+	/**
+	 * Handles commands
+	 * @param command - user input besides "SHOW SHARE CLASS"
+	 */
 	private void processCommand(String command) {
 		switch (command) {
 		case "help":
@@ -87,7 +96,10 @@ public class CLI {
 			}
 		}
 	}
-
+	/**
+	 * Handles SHOW SHARE CLASS cmd, prints whole number % or % to 2 decimal points as needed
+	 * @param code - code of desired parent Portfolio 
+	 */
 	private void showShareClass(String code) {
 		Portfolio parent = portfolios.get(code);
 		if (parent == null) {

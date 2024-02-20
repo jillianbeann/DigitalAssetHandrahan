@@ -15,6 +15,13 @@ import com.model.PortfolioShareClass;
 
 public class CSVParser {
 
+	/**
+	 * Parses the given file by row, creates Portfolio entities with respective attributes, adds entity to map
+	 * @param filename - Portfolio.CSV
+	 * @return Map with Portfolio code Keys mapping to respective Portfolio Objects
+	 * @throws IOException
+	 * @throws CsvValidationException
+	 */
 	public static Map<String, Portfolio> parsePortfolios(String filename) throws IOException, CsvValidationException {
 		// List<Portfolio> portfolios = new ArrayList<>();
 		Map<String, Portfolio> portfolios = new HashMap<>();
@@ -36,6 +43,14 @@ public class CSVParser {
 		return portfolios;
 	}
 
+	/**
+	 * Parses the given file by row, creates PortfolioShareClass entities with respective attributes, sets parent Portfolio using Map lookup, adds entity to list
+	 * @param filename - PortfolioShareClass.CSV
+	 * @param codeLookUp - Map of Portfilio codes to respective portfolios
+	 * @return List of PortfolioShareClass entities with attributes and parent Portfolios set
+	 * @throws IOException
+	 * @throws CsvValidationException
+	 */
 	public static List<PortfolioShareClass> parsePortfolioShareClasses(String filename,
 			Map<String, Portfolio> codeLookUp) throws IOException, CsvValidationException {
 		List<PortfolioShareClass> shareClasses = new ArrayList<>();

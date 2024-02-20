@@ -13,7 +13,7 @@ public class Portfolio {
 		this.name = name;
 		this.code = code;
 		this.marketValue = marketValue;
-		this.shareClasses = new ArrayList<>(0);
+		this.shareClasses = new ArrayList<>();
 	}
 
 	public void addShareClass(PortfolioShareClass psc) {

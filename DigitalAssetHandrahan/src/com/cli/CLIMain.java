@@ -11,7 +11,7 @@ public class CLIMain {
 		} catch (CsvValidationException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
