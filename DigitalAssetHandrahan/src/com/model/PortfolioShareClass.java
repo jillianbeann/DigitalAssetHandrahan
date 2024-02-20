@@ -1,6 +1,5 @@
 package com.model;
 
-//Portfolio Share Class entity
 public class PortfolioShareClass {
 	private Portfolio parentPortfolio;
 	private String name;
@@ -15,7 +14,7 @@ public class PortfolioShareClass {
     }
 	
 	public void setParentPortfolio(Portfolio parent) {
-		this.parentPortfolio  = parent;
+		this.parentPortfolio = parent;
 	}
 	
 	public Portfolio getParentPortfolio() {

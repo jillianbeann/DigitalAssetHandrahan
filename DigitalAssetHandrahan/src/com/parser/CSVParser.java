@@ -13,7 +13,6 @@ import java.util.Map;
 import com.model.Portfolio;
 import com.model.PortfolioShareClass;
 
-//CSV parser class
 public class CSVParser {
 	public static Map<String, Portfolio> codeLookUp; 
 	
@@ -34,15 +33,11 @@ public class CSVParser {
 				String code = nextLine[1];
 				Portfolio portfolio = new Portfolio(nextLine[0], code,Double.parseDouble(nextLine[2].replace("$", "")));
 				codeLookUp.put(code, portfolio);
-//				portfolio.setName(nextLine[0]);
-//				portfolio.setCode(nextLine[1]);
-//				portfolio.setMarketValue(Double.parseDouble(nextLine[2].replace("$", "")));
 				portfolios.add(portfolio);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// Read CSV file and populate portfolio list
 		return portfolios;
 	}
 
@@ -58,9 +53,6 @@ public class CSVParser {
 				Portfolio parent = codeLookUp.get(parentPortfolioCode);
 				PortfolioShareClass shareClass = new PortfolioShareClass(nextLine[1],nextLine[2],Double.parseDouble(nextLine[3].replace("%", "")));
 				parent.addShareClass(shareClass);
-//				shareClass.setParent(portfolios.nextLine[0]);
-//				shareClass.setCode(nextLine[1]);
-//				shareClass.setMarketValue(Double.parseDouble(nextLine[2].replace("$", "")));
 				shareClasses.add(shareClass);
 			}
 		} catch (IOException e) {

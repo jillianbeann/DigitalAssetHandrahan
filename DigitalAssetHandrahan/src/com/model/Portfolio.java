@@ -2,7 +2,6 @@ package com.model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Portfolio entity
 public class Portfolio {
 	private String name;
 	private String code;

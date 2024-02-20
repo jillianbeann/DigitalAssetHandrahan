@@ -8,7 +8,6 @@ import com.model.PortfolioShareClass;
 import com.opencsv.exceptions.CsvValidationException;
 import com.parser.CSVParser;
 
-
 public class CLI {
 	private List<Portfolio> portfolios;
 	private List<PortfolioShareClass> shareClasses;
