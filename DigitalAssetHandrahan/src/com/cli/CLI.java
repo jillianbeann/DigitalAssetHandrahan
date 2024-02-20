@@ -30,9 +30,9 @@ public class CLI {
 
 		while (true) {
 			System.out.print("> ");
-			String input = scanner.nextLine().toLowerCase();
-			if (input.equals("show share class")) {
-				System.out.println("Code? ");
+			String input = scanner.nextLine();
+			if (input.equals("SHOW SHARE CLASS")) {
+				System.out.print("Code? ");
 				input = scanner.nextLine();
 				showShareClass(input);
 			} else {
@@ -46,10 +46,10 @@ public class CLI {
 		case "help":
 			System.out.println("Available commands: COUNTS, LIST PORTFOLIOS, SHOW SHARE CLASS");
 			break;
-		case "counts":
+		case "COUNTS":
 			counts();
 			break;
-		case "list portfolios":
+		case "LIST PORTFOLIOS":
 			listPortfolios();
 			break;
 		default:
@@ -59,21 +59,48 @@ public class CLI {
 
 	// Implement commands: COUNTS, LIST PORTFOLIOS, SHOW SHARE CLASS
 	private void counts() {
-		System.out.println(portfolios.size() + " Portfolios loaded.");
-		System.out.println(shareClasses.size() + " Portfolio Share Classes loaded.");
+		int pSize = portfolios.size();
+		int sSize = shareClasses.size();
+		if (pSize == 1) {
+			System.out.println(pSize + "Portfolio loaded.");
+		} else {
+			System.out.println(pSize + " Portfolios loaded.");
+		}
+		if (sSize == 1) {
+			System.out.println(sSize + "Portfolio Share Class loaded.");
+		} else {
+			System.out.println(sSize + " Portfolio Share Classes loaded.");
+		}
 
 	}
 
 	private void listPortfolios() {
 		for (Portfolio p : portfolios) {
-			System.out.println(p.getName() + ", " + p.getShareClasses().size() + " Share Classes");
+			int size = p.getShareClasses().size();
+			System.out.print(p.getName() + ", " + size);
+			if (size == 1) {
+				System.out.println(" Share Class");
+			} else {
+				System.out.println(" Share Classes");
+			}
 		}
 	}
 
 	private void showShareClass(String code) {
-		Portfolio parent = CSVParser.getCodeMap().get(code); 
-		for (PortfolioShareClass psc : parent.getShareClasses()) {
-			System.out.println(parent.getName() + " " + psc.getName() + " " + psc.getCode() + " " + String.format("%.0f%%", psc.getBaseFee()));
+		Portfolio parent = CSVParser.getCodeMap().get(code);
+		if (parent == null) {
+			System.out.println("Portfolio not found. Try a valid code. Codes are case sensitive.");
+		} else {
+			for (PortfolioShareClass psc : parent.getShareClasses()) {
+				System.out.print(parent.getName() + " " + psc.getName() + " " + psc.getCode() + " ");
+				double fee = psc.getBaseFee();
+				if (fee % 1 == 0) {
+					System.out.println(String.format("%.0f%%", fee));
+				} else {
+					System.out.println(String.format("%.2f%%", fee));
+				}
+
+			}
 		}
 
 	}
