@@ -26,7 +26,7 @@ public class CLI {
 		}
 	}
 
-	public void startPrompt() {
+	private void startPrompt() {
 		// Display prompt and handle user input
 		Scanner scanner = new Scanner(System.in);
 
@@ -64,12 +64,12 @@ public class CLI {
 		int pSize = portfolios.size();
 		int sSize = shareClasses.size();
 		if (pSize == 1) {
-			System.out.println(pSize + "Portfolio loaded.");
+			System.out.println(pSize + " Portfolio loaded.");
 		} else {
 			System.out.println(pSize + " Portfolios loaded.");
 		}
 		if (sSize == 1) {
-			System.out.println(sSize + "Portfolio Share Class loaded.");
+			System.out.println(sSize + " Portfolio Share Class loaded.");
 		} else {
 			System.out.println(sSize + " Portfolio Share Classes loaded.");
 		}
