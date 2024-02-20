@@ -14,15 +14,15 @@ import com.model.Portfolio;
 import com.model.PortfolioShareClass;
 
 public class CSVParser {
-	public static Map<String, Portfolio> codeLookUp; 
+//	public static Map<String, Portfolio> codeLookUp; 
+//	
+//	public static Map<String, Portfolio> getCodeMap() {
+//		return codeLookUp;
+//	}
 	
-	public static Map<String, Portfolio> getCodeMap() {
-		return codeLookUp;
-	}
-	
-	public static List<Portfolio> parsePortfolios(String filename) throws IOException, CsvValidationException {
-		List<Portfolio> portfolios = new ArrayList<>();
-		codeLookUp = new HashMap<>();
+	public static Map<String, Portfolio> parsePortfolios(String filename) throws IOException, CsvValidationException {
+		//List<Portfolio> portfolios = new ArrayList<>();
+		Map<String, Portfolio> portfolios = new HashMap<>();
 		
 		try (CSVReader reader = new CSVReader(new FileReader(filename))) {
 			String[] nextLine;
@@ -32,8 +32,8 @@ public class CSVParser {
 				// Process each row
 				String code = nextLine[1];
 				Portfolio portfolio = new Portfolio(nextLine[0], code,Double.parseDouble(nextLine[2].replace("$", "")));
-				codeLookUp.put(code, portfolio);
-				portfolios.add(portfolio);
+				portfolios.put(code, portfolio);
+				//portfolios.add(portfolio);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class CSVParser {
 		return portfolios;
 	}
 
-	public static List<PortfolioShareClass> parsePortfolioShareClasses(String filename) throws IOException, CsvValidationException {
+	public static List<PortfolioShareClass> parsePortfolioShareClasses(String filename, Map<String, Portfolio> codeLookUp) throws IOException, CsvValidationException {
 		List<PortfolioShareClass> shareClasses = new ArrayList<>();
 		try (CSVReader reader = new CSVReader(new FileReader(filename))) {
 			String[] nextLine;

@@ -3,19 +3,21 @@ package com.cli;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
+import java.util.Map;
+
 import com.model.Portfolio;
 import com.model.PortfolioShareClass;
 import com.opencsv.exceptions.CsvValidationException;
 import com.parser.CSVParser;
 
 public class CLI {
-	private List<Portfolio> portfolios;
+	private Map<String, Portfolio> portfolios;
 	private List<PortfolioShareClass> shareClasses;
 
 	public CLI() throws CsvValidationException {
 		try {
 			portfolios = CSVParser.parsePortfolios("Portfolio.CSV");
-			shareClasses = CSVParser.parsePortfolioShareClasses("PortfolioShareClass.CSV");
+			shareClasses = CSVParser.parsePortfolioShareClasses("PortfolioShareClass.CSV", portfolios);
 			System.out.println("CSV files loaded successfully. Ready to continue.");
 			// Start CLI prompt
 			startPrompt();
@@ -75,7 +77,7 @@ public class CLI {
 	}
 
 	private void listPortfolios() {
-		for (Portfolio p : portfolios) {
+		for (Portfolio p : portfolios.values()) {
 			int size = p.getShareClasses().size();
 			System.out.print(p.getName() + ", " + size);
 			if (size == 1) {
@@ -87,7 +89,7 @@ public class CLI {
 	}
 
 	private void showShareClass(String code) {
-		Portfolio parent = CSVParser.getCodeMap().get(code);
+		Portfolio parent = portfolios.get(code);
 		if (parent == null) {
 			System.out.println("Portfolio not found. Try a valid code. Codes are case sensitive.");
 		} else {
