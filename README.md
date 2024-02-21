@@ -17,9 +17,8 @@ This CLI program allows users to manage portfolios and their associated share cl
 3. Ensure you have Maven installed on your machine.
 4. Open a terminal or command prompt.
 5. Navigate to the project directory.
-6. Compile the Java files: `javac *.java`
-7. Run Maven to resolve dependencies: `mvn compile`
-8. Run the CLI program: `java CLIMain`
+6. Run Maven to resolve dependencies: `mvn clean install`
+7. Run the CLI program: `mvn exec:java -Dexec.mainClass=com.cli.CLIMain`
 
 ## Usage
 - Upon running the program, it automatically loads portfolio and share class data from Portfolio.csv and PortfolioShareClass.csv files.
