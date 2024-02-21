@@ -1,6 +1,9 @@
-/bin/
-/target/
-/.DS_Store
+bin/
+target/
+**/.DS_Store
 
+# eclipse
 .project
+.settings/
+
 .classpath
