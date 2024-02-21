@@ -3,19 +3,25 @@ package com.cli;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
+import java.util.Map;
+
 import com.model.Portfolio;
 import com.model.PortfolioShareClass;
 import com.opencsv.exceptions.CsvValidationException;
 import com.parser.CSVParser;
 
 public class CLI {
-	private List<Portfolio> portfolios;
+	private Map<String, Portfolio> portfolios;
 	private List<PortfolioShareClass> shareClasses;
 
+	/**
+	 * Retrieves data structures with Portfolio and PortfolioShareClass entities, prompts user based on outcome
+	 * @throws CsvValidationException
+	 */
 	public CLI() throws CsvValidationException {
 		try {
 			portfolios = CSVParser.parsePortfolios("Portfolio.CSV");
-			shareClasses = CSVParser.parsePortfolioShareClasses("PortfolioShareClass.CSV");
+			shareClasses = CSVParser.parsePortfolioShareClasses("PortfolioShareClass.CSV", portfolios);
 			System.out.println("CSV files loaded successfully. Ready to continue.");
 			// Start CLI prompt
 			startPrompt();
@@ -24,16 +30,17 @@ public class CLI {
 		}
 	}
 
-	public void startPrompt() {
+	private void startPrompt() {
 		// Display prompt and handle user input
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
 			System.out.print("> ");
-			String input = scanner.nextLine();
+			String input = scanner.nextLine().trim();
 			if (input.equals("SHOW SHARE CLASS")) {
+				// Use this scanner to read the code -> pass to handler 
 				System.out.print("Code? ");
-				input = scanner.nextLine();
+				input = scanner.nextLine().trim();
 				showShareClass(input);
 			} else {
 				processCommand(input);
@@ -41,6 +48,10 @@ public class CLI {
 		}
 	}
 
+	/**
+	 * Handles commands
+	 * @param command - user input besides "SHOW SHARE CLASS"
+	 */
 	private void processCommand(String command) {
 		switch (command) {
 		case "help":
@@ -62,12 +73,12 @@ public class CLI {
 		int pSize = portfolios.size();
 		int sSize = shareClasses.size();
 		if (pSize == 1) {
-			System.out.println(pSize + "Portfolio loaded.");
+			System.out.println(pSize + " Portfolio loaded.");
 		} else {
 			System.out.println(pSize + " Portfolios loaded.");
 		}
 		if (sSize == 1) {
-			System.out.println(sSize + "Portfolio Share Class loaded.");
+			System.out.println(sSize + " Portfolio Share Class loaded.");
 		} else {
 			System.out.println(sSize + " Portfolio Share Classes loaded.");
 		}
@@ -75,7 +86,7 @@ public class CLI {
 	}
 
 	private void listPortfolios() {
-		for (Portfolio p : portfolios) {
+		for (Portfolio p : portfolios.values()) {
 			int size = p.getShareClasses().size();
 			System.out.print(p.getName() + ", " + size);
 			if (size == 1) {
@@ -85,9 +96,12 @@ public class CLI {
 			}
 		}
 	}
-
+	/**
+	 * Handles SHOW SHARE CLASS cmd, prints whole number % or % to 2 decimal points as needed
+	 * @param code - code of desired parent Portfolio 
+	 */
 	private void showShareClass(String code) {
-		Portfolio parent = CSVParser.getCodeMap().get(code);
+		Portfolio parent = portfolios.get(code);
 		if (parent == null) {
 			System.out.println("Portfolio not found. Try a valid code. Codes are case sensitive.");
 		} else {

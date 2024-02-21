@@ -8,11 +8,10 @@ public class CLIMain {
 		CLI cli;
 		try {
 			cli = new CLI();
-			cli.startPrompt();
 		} catch (CsvValidationException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
